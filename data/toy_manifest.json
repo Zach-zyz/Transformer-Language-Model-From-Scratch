@@ -1,0 +1,27 @@
+{
+  "files": {
+    "toy_train.bin": {
+      "dtype": "<i8",
+      "sha256": "e0da2f124ab4a619f38b54946628ba8a327d36a6fb696fdc8f110d5ed5a34614",
+      "size": 824,
+      "tokens": 103
+    },
+    "toy_val.bin": {
+      "dtype": "<i8",
+      "sha256": "f99fa3966784afd16368e45bb75556e65ab237364464c5647de6ef87beeec8d9",
+      "size": 728,
+      "tokens": 91
+    }
+  },
+  "generator": "instructor/regenerate_toy_arrays.py",
+  "schema_version": 1,
+  "source": {
+    "path": "data/toy_corpus.txt",
+    "sha256": "09035f3a273399ec55586cc99dc9352f754b508f9cf05e57e7e8751f63d3ac67",
+    "size": 664
+  },
+  "tokenizer": {
+    "path": "artifacts/canonical_tokenizer.json",
+    "sha256": "2150eb89992a0dc1aadf79cbbb071673ab82b607e70f85e530f7639002b675e2"
+  }
+}

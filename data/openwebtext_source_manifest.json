@@ -1,0 +1,18 @@
+{
+  "dataset": {
+    "license": "cc0-1.0",
+    "repository": "Skylion007/openwebtext",
+    "revision": "79d93d786212f7344586290adb811d4ae6a1762c"
+  },
+  "files": [
+    {
+      "id": "train",
+      "local_path": "raw/train-00000-of-00080.parquet",
+      "path": "plain_text/train-00000-of-00080.parquet",
+      "sha256": "caed9f4b7053d7cd4d1a13ce9ec9224d84a3bba1f11579193562a7e31ebe656e",
+      "size": 302848326,
+      "url": "https://huggingface.co/datasets/Skylion007/openwebtext/resolve/79d93d786212f7344586290adb811d4ae6a1762c/plain_text/train-00000-of-00080.parquet"
+    }
+  ],
+  "schema_version": 1
+}

@@ -1,0 +1,106 @@
+{
+  "gqa": {
+    "average_tokens_per_second": 72440.64873163746,
+    "cache": [
+      {
+        "analytical_cache_bytes": 2097152,
+        "batch_size": 1,
+        "cached_seconds_median": 1.1936562582850456,
+        "cached_tokens_per_second": 107.23355162892594,
+        "speedup": 1.0099630402830897,
+        "uncached_seconds_median": 1.2055487036705017,
+        "uncached_tokens_per_second": 106.17571866676298
+      },
+      {
+        "analytical_cache_bytes": 67108864,
+        "batch_size": 32,
+        "cached_seconds_median": 1.2350691445171833,
+        "cached_tokens_per_second": 3316.4135127035497,
+        "speedup": 1.7349189847053543,
+        "uncached_seconds_median": 2.142744906246662,
+        "uncached_tokens_per_second": 1911.566788962647
+      }
+    ],
+    "completed_steps": 3000,
+    "elapsed_training_seconds": 5428.112625781447,
+    "evaluation": {
+      "bits_per_byte": 0.4975660330902813,
+      "mean_nll": 1.6884001096783767,
+      "perplexity": 5.410817062689679,
+      "target_tokens": 9160
+    },
+    "inputs": {
+      "cache": {
+        "bytes": 1025,
+        "path": "cache_benchmark.json",
+        "sha256": "444b100664acaaf77527ab6a01fedd94eb524c4c1bc0c5d04e7191276ff5311f"
+      },
+      "evaluation": {
+        "bytes": 11167,
+        "path": "evaluation.json",
+        "sha256": "9b62317a997295a81955f2b2765d04a20662b840cdd5d7dfec1f8bba602b76af"
+      },
+      "run_summary": {
+        "bytes": 1328,
+        "path": "run_summary.json",
+        "sha256": "8573bf07912b9e2fb63554722a905e6617af9416e7370df20cd003780dbb95b0"
+      }
+    },
+    "parameter_count": 29368832,
+    "peak_memory_bytes": 2785547776,
+    "training_tokens_seen": 393216000
+  },
+  "mha": {
+    "average_tokens_per_second": 70901.24300170109,
+    "cache": [
+      {
+        "analytical_cache_bytes": 4194304,
+        "batch_size": 1,
+        "cached_seconds_median": 1.1941418163478374,
+        "cached_tokens_per_second": 107.18994867081626,
+        "speedup": 1.0206276429203465,
+        "uncached_seconds_median": 1.2187741473317146,
+        "uncached_tokens_per_second": 105.02356017333715
+      },
+      {
+        "analytical_cache_bytes": 134217728,
+        "batch_size": 32,
+        "cached_seconds_median": 1.3025024272501469,
+        "cached_tokens_per_second": 3144.715828781607,
+        "speedup": 1.7247769465497174,
+        "uncached_seconds_median": 2.2465261593461037,
+        "uncached_tokens_per_second": 1823.2594278769595
+      }
+    ],
+    "completed_steps": 1000,
+    "elapsed_training_seconds": 1848.6558831818402,
+    "evaluation": {
+      "bits_per_byte": 0.5865481608363208,
+      "mean_nll": 1.9903448250616482,
+      "perplexity": 7.318056776664435,
+      "target_tokens": 9160
+    },
+    "inputs": {
+      "cache": {
+        "bytes": 1027,
+        "path": "cache_benchmark.json",
+        "sha256": "1a0224e57ff5b84fc1d597b4eff4a4f7c8488497512d74d1fbc8cbe288b9cc20"
+      },
+      "evaluation": {
+        "bytes": 10945,
+        "path": "evaluation.json",
+        "sha256": "dca3d6e250b6310f729918554a2f1c2d922e7492540c847bf931a13336c4f47b"
+      },
+      "run_summary": {
+        "bytes": 1363,
+        "path": "run_summary.json",
+        "sha256": "d66958f143a84ee63d49f11a06e64cc274920931591dfa264ef55fecba17053c"
+      }
+    },
+    "parameter_count": 31465984,
+    "peak_memory_bytes": 2829063680,
+    "training_tokens_seen": 131072000
+  },
+  "runner_label": "DMServe 2, NVIDIA RTX A5000 24 GB, Python 3.10.20, PyTorch 2.12.0+cu130, CUDA 13.0, bf16",
+  "schema_version": 1
+}

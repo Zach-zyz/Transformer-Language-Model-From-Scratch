@@ -1,0 +1,26 @@
+{
+  "dataset": {
+    "license": "cdla-sharing-1.0",
+    "repository": "roneneldan/TinyStories",
+    "revision": "f54c09fd23315a6f9c86f9dc80f725de7d8f9c64"
+  },
+  "files": [
+    {
+      "id": "train",
+      "local_path": "raw/TinyStories-train.txt",
+      "path": "TinyStories-train.txt",
+      "sha256": "c5cf5e22ff13614e830afbe61a99fbcbe8bcb7dd72252b989fa1117a368d401f",
+      "size": 1924281556,
+      "url": "https://huggingface.co/datasets/roneneldan/TinyStories/resolve/f54c09fd23315a6f9c86f9dc80f725de7d8f9c64/TinyStories-train.txt"
+    },
+    {
+      "id": "validation",
+      "local_path": "raw/TinyStories-valid.txt",
+      "path": "TinyStories-valid.txt",
+      "sha256": "94e431816c4cce81ff71e4408ff8d3bda9a42e8d2663986697c3954288cb38b4",
+      "size": 19447282,
+      "url": "https://huggingface.co/datasets/roneneldan/TinyStories/resolve/f54c09fd23315a6f9c86f9dc80f725de7d8f9c64/TinyStories-valid.txt"
+    }
+  ],
+  "schema_version": 1
+}

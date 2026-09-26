@@ -1,0 +1,46 @@
+{
+  "files": {
+    "train": {
+      "documents": 2119718,
+      "dtype": "<i8",
+      "partial": false,
+      "path": "train.bin",
+      "sha256": "0754e1f547145bc30d696d8596deb9b0d48b027a5aed8510224d7f4743b8d26b",
+      "size": 3673820552,
+      "source": "TinyStories-train.txt",
+      "source_sha256": "c5cf5e22ff13614e830afbe61a99fbcbe8bcb7dd72252b989fa1117a368d401f",
+      "source_size": 1924281556,
+      "tokens": 459227569
+    },
+    "validation": {
+      "documents": 21989,
+      "dtype": "<i8",
+      "partial": false,
+      "path": "validation.bin",
+      "sha256": "b979ddb8dc3b955e91eca990cc245d895af819d2f0e7be25db378fa1453a03ae",
+      "size": 36857912,
+      "source": "TinyStories-valid.txt",
+      "source_sha256": "94e431816c4cce81ff71e4408ff8d3bda9a42e8d2663986697c3954288cb38b4",
+      "source_size": 19447282,
+      "tokens": 4607239
+    },
+    "validation_span": {
+      "documents": 64,
+      "dtype": "<i8",
+      "partial": false,
+      "path": "validation_span.bin",
+      "sha256": "e2c013aee8c16233ed5c9a0cd0c5e890a609d02df13ef9c90632cf679e2908ed",
+      "size": 73288,
+      "source": "validation_span.txt",
+      "source_sha256": "7fbcade20c59112070b7d9cb8875a79da300d9c25488d227ddba37e73cb6a6d7",
+      "source_size": 44843,
+      "tokens": 9161
+    }
+  },
+  "schema_version": 1,
+  "tokenizer": {
+    "path": "canonical_tokenizer.json",
+    "sha256": "2150eb89992a0dc1aadf79cbbb071673ab82b607e70f85e530f7639002b675e2",
+    "vocabulary_size": 8192
+  }
+}

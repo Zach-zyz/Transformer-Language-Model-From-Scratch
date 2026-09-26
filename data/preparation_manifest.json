@@ -1,0 +1,28 @@
+{
+  "derivatives": {
+    "tokenizer_training": {
+      "documents": 64,
+      "output": "tokenizer_train.txt",
+      "sha256": "2afe3baf6ba281da49924cfdf9edf19730465fd442a1d149bba04994c44704a3",
+      "size": 46906,
+      "source_id": "train"
+    },
+    "validation_span": {
+      "documents": 64,
+      "output": "validation_span.txt",
+      "sha256": "7fbcade20c59112070b7d9cb8875a79da300d9c25488d227ddba37e73cb6a6d7",
+      "size": 44843,
+      "source_id": "validation"
+    }
+  },
+  "document_boundary": "<|endoftext|>",
+  "packed": {
+    "dtype": "<i8",
+    "outputs": {
+      "train": "train.bin",
+      "validation": "validation.bin",
+      "validation_span": "validation_span.bin"
+    }
+  },
+  "schema_version": 1
+}

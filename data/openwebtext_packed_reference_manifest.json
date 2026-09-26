@@ -1,0 +1,39 @@
+{
+  "dataset": {
+    "license": "cc0-1.0",
+    "repository": "Skylion007/openwebtext",
+    "revision": "79d93d786212f7344586290adb811d4ae6a1762c"
+  },
+  "files": {
+    "train": {
+      "documents": 98173,
+      "dtype": "<i8",
+      "path": "train.bin",
+      "sha256": "d1911d96e0f84d710432838e65443b7b3c1d1c1b71cce64aa1de5796d86e7e79",
+      "size": 1598225736,
+      "source_size": 487041654,
+      "tokens": 199778217
+    },
+    "validation_span": {
+      "documents": 2000,
+      "dtype": "<i8",
+      "path": "validation_span.bin",
+      "sha256": "58a72ef203cb177608ecac62148cf4e0a2b1d5acc539bcd6a12227a96439a7a9",
+      "size": 35302872,
+      "source_size": 10680873,
+      "tokens": 4412859
+    }
+  },
+  "schema_version": 1,
+  "source": {
+    "path": "plain_text/train-00000-of-00080.parquet",
+    "rows": 100173,
+    "sha256": "caed9f4b7053d7cd4d1a13ce9ec9224d84a3bba1f11579193562a7e31ebe656e",
+    "size": 302848326
+  },
+  "tokenizer": {
+    "path": "canonical_tokenizer.json",
+    "sha256": "2150eb89992a0dc1aadf79cbbb071673ab82b607e70f85e530f7639002b675e2",
+    "vocabulary_size": 8192
+  }
+}

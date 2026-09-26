@@ -1,0 +1,91 @@
+{
+  "comparison": "student bits_per_byte must be strictly lower than a tier",
+  "runner_label": "DMServe 2, NVIDIA RTX A5000 24 GB, Python 3.10.20, PyTorch 2.12.0+cu130, CUDA 13.0, bf16",
+  "schema_version": 1,
+  "tiers": {
+    "B1": {
+      "bits_per_byte": 2.1972649292605646,
+      "completed_steps": 500,
+      "evaluation": {
+        "bytes": 9718,
+        "path": "evaluation.json",
+        "sha256": "49786981f79da4d39ef436b430aa9da45fa575bc593b4407245ae6935376a75c"
+      },
+      "mean_nll": 3.686334013849271,
+      "model_config": {
+        "bytes": 145,
+        "path": "bonus_b1_model.yaml",
+        "sha256": "06bddbfa992e97adf1d13e076e6af4b3a74da536b03ac108e7c9d21f625800f0"
+      },
+      "parameter_count": 5245184,
+      "perplexity": 39.89831186485558,
+      "run_config": {
+        "bytes": 225,
+        "path": "bonus_b1_train.yaml",
+        "sha256": "46e8d9885b2ac804be6df9350cc9409a98a4161877c0e03ee381f7453e25b5e5"
+      },
+      "run_summary": {
+        "bytes": 1338,
+        "path": "run_summary.json",
+        "sha256": "92a2ffc9fb0fb3e202c7c3df0465822bf22b4e51225fc55c6ffbaf4b192c8dee"
+      },
+      "training_tokens_seen": 65536000
+    },
+    "B2": {
+      "bits_per_byte": 1.6833151129371655,
+      "completed_steps": 1000,
+      "evaluation": {
+        "bytes": 9963,
+        "path": "evaluation.json",
+        "sha256": "8b7aef18b80ac05f66f73213050b0399d338a83e052711c054561a496ffb391a"
+      },
+      "mean_nll": 2.8240844671084013,
+      "model_config": {
+        "bytes": 146,
+        "path": "small.yaml",
+        "sha256": "f2e355a4158bd9b25f523000060582ab29e180001ef3c78f4aa62bfc8b379367"
+      },
+      "parameter_count": 29368832,
+      "perplexity": 16.845515300640862,
+      "run_config": {
+        "bytes": 227,
+        "path": "bonus_b2_train.yaml",
+        "sha256": "fbeaaebd91c8e34a25c2f09e9cb1ddd2fd1359914d959b8341d80656c0182b19"
+      },
+      "run_summary": {
+        "bytes": 1346,
+        "path": "run_summary.json",
+        "sha256": "54992aa1843f976e246c0c76f7dcd32157ce4e700242d10de4e3630e031d02c9"
+      },
+      "training_tokens_seen": 131072000
+    },
+    "B3": {
+      "bits_per_byte": 1.4570227559150561,
+      "completed_steps": 3000,
+      "evaluation": {
+        "bytes": 9856,
+        "path": "evaluation.json",
+        "sha256": "e7678c088b0e191015f33817766732e322fb7d6aa3089de3587bc92b625049b6"
+      },
+      "mean_nll": 2.4444355673985925,
+      "model_config": {
+        "bytes": 146,
+        "path": "small.yaml",
+        "sha256": "f2e355a4158bd9b25f523000060582ab29e180001ef3c78f4aa62bfc8b379367"
+      },
+      "parameter_count": 29368832,
+      "perplexity": 11.524043217112837,
+      "run_config": {
+        "bytes": 228,
+        "path": "bonus_b3_train.yaml",
+        "sha256": "9f4d20ec29cceb4168d1ef8755970454af4573d668f6c8b852bcfc3a3928a799"
+      },
+      "run_summary": {
+        "bytes": 1346,
+        "path": "run_summary.json",
+        "sha256": "f74e2efa25ce718f3f535637a19a97c966217d785ba30ce199c59b398a6a5466"
+      },
+      "training_tokens_seen": 393216000
+    }
+  }
+}

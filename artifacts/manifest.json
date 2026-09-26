@@ -1,0 +1,56 @@
+{
+  "files": {
+    "bonus_baselines.json": {
+      "sha256": "f1c2a5a8bdbf1fff148d3f1c62f21f81214bed66b1a48da78e908e3a7e45e4f5",
+      "size": 3062
+    },
+    "cache_golden.npz": {
+      "sha256": "c7918bbd636756076148c90d9afc3869e8b94c4d6d72d2c4f940b85bb5eb0fad",
+      "size": 913186
+    },
+    "canonical_tokenizer.json": {
+      "sha256": "2150eb89992a0dc1aadf79cbbb071673ab82b607e70f85e530f7639002b675e2",
+      "size": 623282
+    },
+    "reference_logits.npz": {
+      "sha256": "31b281258104a63b6cafcc6f5addb17b9d22d21fe0df9df991161847b7a6b26a",
+      "size": 304756
+    },
+    "reference_ranges.json": {
+      "sha256": "4ec46dec3de04ddb06c161353667586a974eb0f782a8bf0e26eee6cc14e9e2da",
+      "size": 1789
+    },
+    "tiny_reference_checkpoint.pt": {
+      "sha256": "fea64831780144385e95f3d55ea2f1e44373c2c386523d11f4eff3783898d2f1",
+      "size": 1091572
+    },
+    "training_reference.json": {
+      "sha256": "1dd085372ceded5925f2ee78e887ce05ccfd82d766e3c3981d903b3a32497ca5",
+      "size": 3517
+    }
+  },
+  "generator": "instructor/regenerate_artifacts.py",
+  "measured_reference_generator": "instructor/freeze_training_results.py",
+  "prompt_text": "Once upon a time, a little girl found a",
+  "runtime_reference_generator": "instructor/regenerate_reference_ranges.py",
+  "schema_version": 1,
+  "seed": 2026,
+  "tiny_model_config": {
+    "d_ff": 64,
+    "d_model": 32,
+    "dropout": 0.0,
+    "max_seq_len": 32,
+    "n_heads": 4,
+    "n_kv_heads": 2,
+    "n_layers": 1,
+    "rms_eps": 1e-06,
+    "rope_theta": 10000.0,
+    "vocab_size": 8192
+  },
+  "tokenizer_training_shard": {
+    "documents": 64,
+    "path": "data/tokenizer_train.txt",
+    "sha256": "2afe3baf6ba281da49924cfdf9edf19730465fd442a1d149bba04994c44704a3",
+    "size": 46906
+  }
+}

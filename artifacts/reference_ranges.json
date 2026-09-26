@@ -1,0 +1,55 @@
+{
+  "data_packing": {
+    "megabytes_per_second": 0.36250628932619156,
+    "minimum_sample_bytes": 1048576,
+    "packed_bytes": 1919120,
+    "projected_full_train_seconds": 5308.27081531953,
+    "sample_bytes": 1048767,
+    "sample_documents": 1321,
+    "sample_tokens": 239890,
+    "seconds": 2.8931001499295235,
+    "source": {
+      "dataset": "roneneldan/TinyStories",
+      "path": "TinyStories-valid.txt",
+      "revision": "f54c09fd23315a6f9c86f9dc80f725de7d8f9c64"
+    },
+    "source_bytes": 19447282,
+    "source_sha256": "94e431816c4cce81ff71e4408ff8d3bda9a42e8d2663986697c3954288cb38b4"
+  },
+  "platform": "Linux-5.15.0-164-generic-x86_64-with-glibc2.35",
+  "python": "3.10.20",
+  "runner_label": "DMServe2 RTX A5000 host, Python 3.10.20, PyTorch 2.12.0+cu130",
+  "schema_version": 1,
+  "tokenizer_encoding": {
+    "median_seconds": 0.12327703461050987,
+    "megabytes_per_second": 0.3637579387083744,
+    "repeats": 5,
+    "seconds": [
+      0.12219664454460144,
+      0.1269463449716568,
+      0.12327703461050987,
+      0.12272198125720024,
+      0.12364448234438896
+    ],
+    "text_bytes": 44843,
+    "text_sha256": "7fbcade20c59112070b7d9cb8875a79da300d9c25488d227ddba37e73cb6a6d7",
+    "tokens": 9161
+  },
+  "tokenizer_training": {
+    "canonical_tokenizer_sha256": "2150eb89992a0dc1aadf79cbbb071673ab82b607e70f85e530f7639002b675e2",
+    "median_seconds": 0.2841674014925957,
+    "repeats": 5,
+    "seconds": [
+      0.2369447983801365,
+      0.2221141941845417,
+      0.2841674014925957,
+      0.28575297072529793,
+      0.2917879745364189
+    ],
+    "shard_bytes": 46906,
+    "shard_sha256": "2afe3baf6ba281da49924cfdf9edf19730465fd442a1d149bba04994c44704a3",
+    "student_limit_seconds": 0.852502204477787,
+    "vocabulary_size": 8192
+  },
+  "torch": "2.12.0+cu130"
+}
