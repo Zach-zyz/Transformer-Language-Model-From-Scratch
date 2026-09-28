@@ -6,6 +6,7 @@ from dataclasses import dataclass
 from typing import TypeAlias
 
 import torch
+import torch.nn.functional as F
 from torch import Tensor, nn
 
 
@@ -47,7 +48,9 @@ class RMSNorm(nn.Module):
         self.weight = nn.Parameter(torch.ones(dim))
 
     def forward(self, x: Tensor) -> Tensor:
-        raise NotImplementedError
+        mean_square = x.pow(2).mean(dim=-1, keepdim=True)
+        normalized = x * torch.rsqrt(mean_square + self.eps)
+        return normalized * self.weight
 
 
 class RotaryEmbedding(nn.Module):
@@ -59,10 +62,78 @@ class RotaryEmbedding(nn.Module):
         self.max_seq_len = max_seq_len
         self.theta = theta
         # Register precomputed non-persistent cosine and sine tables here.
+        positions = torch.arange(
+            max_seq_len,
+            dtype=torch.float32,
+        )
+
+        dimension_indices = torch.arange(
+            0,
+            head_dim,
+            2,
+            dtype=torch.float32,
+        )
+
+        inverse_frequencies = theta ** (
+            -dimension_indices / head_dim
+        )
+
+        angles = (
+            positions[:, None]
+            * inverse_frequencies[None, :]
+        )
+
+        self.register_buffer(
+            "cos_table",
+            angles.cos(),
+            persistent=False,
+        )
+        self.register_buffer(
+            "sin_table",
+            angles.sin(),
+            persistent=False,
+        )
 
     def forward(self, x: Tensor, position_offset: int = 0) -> Tensor:
         """Apply RoPE to a tensor shaped ``(..., sequence, head_dim)``."""
-        raise NotImplementedError
+        if x.shape[-1] != self.head_dim:
+            raise ValueError(
+                f"Expected head dimension {self.head_dim}, "
+                f"received {x.shape[-1]}"
+            )
+
+        if position_offset < 0:
+            raise ValueError("position_offset must be non-negative")
+
+        sequence_length = x.shape[-2]
+        position_end = position_offset + sequence_length
+
+        if position_end > self.max_seq_len:
+            raise ValueError(
+                "RoPE positions exceed the configured maximum sequence length"
+            )
+
+        cos = self.cos_table[position_offset:position_end].to(
+            device=x.device,
+            dtype=x.dtype,
+        )
+        sin = self.sin_table[position_offset:position_end].to(
+            device=x.device,
+            dtype=x.dtype,
+        )
+
+        even = x[..., 0::2]
+        odd = x[..., 1::2]
+
+        rotated_even = even * cos - odd * sin
+        rotated_odd = even * sin + odd * cos
+
+        rotated = torch.stack(
+            (rotated_even, rotated_odd),
+            dim=-1,
+        )
+
+        return rotated.flatten(-2)
 
 
 class CausalSelfAttention(nn.Module):
@@ -88,7 +159,169 @@ class CausalSelfAttention(nn.Module):
 
         Cache tensors use shape ``(batch, n_kv_heads, sequence, head_dim)``.
         """
-        raise NotImplementedError
+        batch_size, query_length, _ = x.shape
+
+        q = self.q_proj(x)
+        new_k = self.k_proj(x)
+        new_v = self.v_proj(x)
+
+        q = q.view(
+            batch_size,
+            query_length,
+            self.config.n_heads,
+            self.head_dim,
+        ).transpose(1, 2)
+
+        new_k = new_k.view(
+            batch_size,
+            query_length,
+            self.config.n_kv_heads,
+            self.head_dim,
+        ).transpose(1, 2)
+
+        new_v = new_v.view(
+            batch_size,
+            query_length,
+            self.config.n_kv_heads,
+            self.head_dim,
+        ).transpose(1, 2)
+
+        past_length = 0
+
+        if cache is not None:
+            cached_k, cached_v = cache
+
+            if cached_k.ndim != 4 or cached_v.ndim != 4:
+                raise ValueError(
+                    "KV cache tensors must be four-dimensional"
+                )
+
+            if cached_k.shape != cached_v.shape:
+                raise ValueError(
+                    "key and value caches must have identical shapes"
+                )
+
+            expected_prefix = (
+                batch_size,
+                self.config.n_kv_heads,
+            )
+
+            if cached_k.shape[:2] != expected_prefix:
+                raise ValueError(
+                    "KV cache batch or head dimensions do not match the input"
+                )
+
+            if cached_k.shape[-1] != self.head_dim:
+                raise ValueError(
+                    "KV cache head dimension does not match the model"
+                )
+
+            past_length = cached_k.shape[-2]
+
+        q = self.rope(
+            q,
+            position_offset=past_length,
+        )
+        new_k = self.rope(
+            new_k,
+            position_offset=past_length,
+        )
+
+        if cache is None:
+            compact_k = new_k
+            compact_v = new_v
+        else:
+            cached_k, cached_v = cache
+
+            compact_k = torch.cat(
+                (cached_k, new_k),
+                dim=-2,
+            )
+            compact_v = torch.cat(
+                (cached_v, new_v),
+                dim=-2,
+            )
+
+        updated_cache: KVCache | None = (
+            (compact_k, compact_v)
+            if use_cache
+            else None
+        )
+
+        query_heads_per_kv_head = (
+            self.config.n_heads
+            // self.config.n_kv_heads
+        )
+
+        if query_heads_per_kv_head > 1:
+            attention_k = compact_k.repeat_interleave(
+                query_heads_per_kv_head,
+                dim=1,
+            )
+            attention_v = compact_v.repeat_interleave(
+                query_heads_per_kv_head,
+                dim=1,
+            )
+        else:
+            attention_k = compact_k
+            attention_v = compact_v
+
+        attention_scores = (
+            q @ attention_k.transpose(-2, -1)
+        )
+        attention_scores = (
+            attention_scores
+            * (self.head_dim ** -0.5)
+        )
+
+        total_key_length = attention_k.shape[-2]
+
+        key_positions = torch.arange(
+            total_key_length,
+            device=x.device,
+        )
+        query_positions = (
+            past_length
+            + torch.arange(
+                query_length,
+                device=x.device,
+            )
+        )
+
+        causal_mask = (
+            key_positions.unsqueeze(0)
+            > query_positions.unsqueeze(1)
+        )
+
+        attention_scores = attention_scores.masked_fill(
+            causal_mask,
+            float("-inf"),
+        )
+
+        attention_weights = torch.softmax(
+            attention_scores,
+            dim=-1,
+        )
+        attention_weights = self.dropout(
+            attention_weights
+        )
+
+        context = attention_weights @ attention_v
+
+        context = (
+            context
+            .transpose(1, 2)
+            .contiguous()
+            .view(
+                batch_size,
+                query_length,
+                self.config.d_model,
+            )
+        )
+
+        output = self.o_proj(context)
+
+        return output, updated_cache
 
 
 class SwiGLU(nn.Module):
@@ -99,7 +332,10 @@ class SwiGLU(nn.Module):
         self.w2 = nn.Linear(config.d_ff, config.d_model, bias=False)
 
     def forward(self, x: Tensor) -> Tensor:
-        raise NotImplementedError
+        gate = F.silu(self.w1(x))
+        value = self.w3(x)
+        hidden = gate * value
+        return self.w2(hidden)
 
 
 class TransformerBlock(nn.Module):
@@ -116,7 +352,22 @@ class TransformerBlock(nn.Module):
         cache: KVCache | None = None,
         use_cache: bool = False,
     ) -> tuple[Tensor, KVCache | None]:
-        raise NotImplementedError
+        attention_input = self.attn_norm(x)
+
+        attention_output, new_cache = self.attn(
+            attention_input,
+            cache=cache,
+            use_cache=use_cache,
+        )
+
+        x = x + attention_output
+
+        ffn_input = self.ffn_norm(x)
+        ffn_output = self.ffn(ffn_input)
+
+        x = x + ffn_output
+
+        return x, new_cache
 
 
 class TransformerLM(nn.Module):
@@ -131,7 +382,40 @@ class TransformerLM(nn.Module):
 
     def _init_weights(self, module: nn.Module) -> None:
         """Apply the assignment initialization, including scaled residual projections."""
-        raise NotImplementedError
+        if isinstance(module, nn.Embedding):
+            nn.init.normal_(
+                module.weight,
+                mean=0.0,
+                std=0.02,
+            )
+            return
+
+        if isinstance(module, RMSNorm):
+            nn.init.ones_(module.weight)
+            return
+
+        if isinstance(module, nn.Linear):
+            is_residual_projection = any(
+                module is block.attn.o_proj
+                or module is block.ffn.w2
+                for block in self.blocks
+            )
+
+            if is_residual_projection:
+                standard_deviation = (
+                    0.02 / (2 * self.config.n_layers) ** 0.5
+                )
+            else:
+                standard_deviation = 0.02
+
+            nn.init.normal_(
+                module.weight,
+                mean=0.0,
+                std=standard_deviation,
+            )
+
+            if module.bias is not None:
+                nn.init.zeros_(module.bias)
 
     def forward(
         self,
@@ -140,4 +424,76 @@ class TransformerLM(nn.Module):
         use_cache: bool = False,
     ) -> ModelOutput:
         """Run full-sequence or incremental decoding with tied output weights."""
-        raise NotImplementedError
+        if input_ids.ndim != 2:
+            raise ValueError(
+                "input_ids must have shape (batch, sequence)"
+            )
+
+        if cache is not None and len(cache) != len(self.blocks):
+            raise ValueError(
+                "cache must contain one KV cache per Transformer block"
+            )
+
+        sequence_length = input_ids.shape[1]
+
+        if cache is None:
+            past_length = 0
+            layer_caches: list[KVCache | None] = [
+                None
+                for _ in self.blocks
+            ]
+        else:
+            past_lengths = {
+                layer_cache[0].shape[-2]
+                for layer_cache in cache
+            }
+
+            if len(past_lengths) != 1:
+                raise ValueError(
+                    "all layer caches must have the same sequence length"
+                )
+
+            past_length = next(iter(past_lengths))
+            layer_caches = list(cache)
+
+        if past_length + sequence_length > self.config.max_seq_len:
+            raise ValueError(
+                "input sequence exceeds the configured maximum sequence length"
+            )
+
+        x = self.token_embedding(input_ids)
+
+        new_cache: list[KVCache] | None = (
+            [] if use_cache else None
+        )
+
+        for block, layer_cache in zip(
+            self.blocks,
+            layer_caches,
+            strict=True,
+        ):
+            x, updated_layer_cache = block(
+                x,
+                cache=layer_cache,
+                use_cache=use_cache,
+            )
+
+            if new_cache is not None:
+                if updated_layer_cache is None:
+                    raise RuntimeError(
+                        "attention did not return a cache when use_cache=True"
+                    )
+
+                new_cache.append(updated_layer_cache)
+
+        x = self.final_norm(x)
+
+        logits = F.linear(
+            x,
+            self.token_embedding.weight,
+        )
+
+        return ModelOutput(
+            logits=logits,
+            cache=new_cache,
+        )
