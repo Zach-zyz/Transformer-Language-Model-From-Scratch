@@ -11,10 +11,10 @@ import yaml
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 
-from cs8803_hw1.generate import generate
-from cs8803_hw1.model import TransformerConfig, TransformerLM
-from cs8803_hw1.tokenizer import ByteBPETokenizer
-from cs8803_hw1.train import train_steps
+from src.generate import generate
+from src.model import TransformerConfig, TransformerLM
+from src.tokenizer import ByteBPETokenizer
+from src.train import train_steps
 
 def main() -> None:
     torch.manual_seed(2026)

@@ -15,8 +15,8 @@ import torch
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 
-from cs8803_hw1.generate import generate
-from cs8803_hw1.model import TransformerConfig, TransformerLM
+from src.generate import generate
+from src.model import TransformerConfig, TransformerLM
 from release_utils import (
     choose_device,
     load_checkpoint_model_state,

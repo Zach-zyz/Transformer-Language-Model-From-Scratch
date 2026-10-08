@@ -13,10 +13,10 @@ import torch
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 
-from cs8803_hw1.evaluate import evaluate_token_ids
-from cs8803_hw1.generate import generate
-from cs8803_hw1.model import TransformerConfig, TransformerLM
-from cs8803_hw1.tokenizer import ByteBPETokenizer
+from src.evaluate import evaluate_token_ids
+from src.generate import generate
+from src.model import TransformerConfig, TransformerLM
+from src.tokenizer import ByteBPETokenizer
 from release_utils import (
     choose_device,
     load_checkpoint_model_state,

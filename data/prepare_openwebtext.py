@@ -15,7 +15,7 @@ ROOT = Path(__file__).resolve().parent
 REPOSITORY_ROOT = ROOT.parent
 sys.path.insert(0, str(REPOSITORY_ROOT))
 
-from cs8803_hw1.tokenizer import ByteBPETokenizer, SPECIAL_TOKEN_ID
+from src.tokenizer import ByteBPETokenizer, SPECIAL_TOKEN_ID
 from data.download_data import load_manifest, sha256_file, verify_file
 
 

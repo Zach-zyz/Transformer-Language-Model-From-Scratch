@@ -1,7 +1,7 @@
 import torch
 import torch.nn.functional as F
 
-from cs8803_hw1.model import (
+from src.model import (
     CausalSelfAttention,
     RMSNorm,
     RotaryEmbedding,
@@ -10,7 +10,7 @@ from cs8803_hw1.model import (
     TransformerConfig,
     TransformerLM,
 )
-from cs8803_hw1.optimizer import stable_cross_entropy
+from src.optimizer import stable_cross_entropy
 
 
 def tiny_config(**overrides) -> TransformerConfig:

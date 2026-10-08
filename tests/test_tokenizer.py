@@ -3,7 +3,7 @@ import random
 
 import pytest
 
-from cs8803_hw1.tokenizer import ByteBPETokenizer, SPECIAL_TOKEN, SPECIAL_TOKEN_ID
+from src.tokenizer import ByteBPETokenizer, SPECIAL_TOKEN, SPECIAL_TOKEN_ID
 
 
 def test_tokenizer_roundtrip_unicode_and_empty() -> None:

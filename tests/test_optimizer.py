@@ -1,7 +1,7 @@
 import torch
 import torch.nn.functional as F
 
-from cs8803_hw1.optimizer import AdamW, stable_cross_entropy
+from src.optimizer import AdamW, stable_cross_entropy
 
 
 def test_stable_cross_entropy_matches_torch() -> None:

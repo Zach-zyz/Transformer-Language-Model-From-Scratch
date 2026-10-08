@@ -1,8 +1,8 @@
 import pytest
 import torch
 
-from cs8803_hw1.generate import generate, sample_next_token
-from cs8803_hw1.model import TransformerConfig, TransformerLM
+from src.generate import generate, sample_next_token
+from src.model import TransformerConfig, TransformerLM
 
 
 def test_temperature_zero_is_greedy() -> None:

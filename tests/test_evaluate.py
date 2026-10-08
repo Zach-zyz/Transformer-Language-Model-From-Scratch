@@ -3,8 +3,8 @@ import math
 import torch
 from torch import nn
 
-from cs8803_hw1.evaluate import evaluate_token_ids
-from cs8803_hw1.model import ModelOutput
+from src.evaluate import evaluate_token_ids
+from src.model import ModelOutput
 
 
 class UniformModel(nn.Module):

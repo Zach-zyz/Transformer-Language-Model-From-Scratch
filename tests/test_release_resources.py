@@ -9,9 +9,9 @@ import pytest
 import torch
 import yaml
 
-from cs8803_hw1.model import TransformerConfig, TransformerLM
-from cs8803_hw1.tokenizer import ByteBPETokenizer, SPECIAL_TOKEN
-from cs8803_hw1.train import cosine_lr
+from src.model import TransformerConfig, TransformerLM
+from src.tokenizer import ByteBPETokenizer, SPECIAL_TOKEN
+from src.train import cosine_lr
 from scripts.summarize_results import validation_at_step
 from scripts.train_tinystories import validate_resume_metadata
 from data.download_data import download_file

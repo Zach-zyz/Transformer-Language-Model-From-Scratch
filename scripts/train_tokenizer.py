@@ -13,7 +13,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 
-from cs8803_hw1.tokenizer import ByteBPETokenizer
+from src.tokenizer import ByteBPETokenizer
 from release_utils import sha256_file, write_json
 
 

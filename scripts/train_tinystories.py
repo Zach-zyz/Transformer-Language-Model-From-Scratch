@@ -16,15 +16,15 @@ import torch
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 
-from cs8803_hw1.evaluate import evaluate_token_ids
-from cs8803_hw1.model import TransformerConfig, TransformerLM
-from cs8803_hw1.train import (
+from src.evaluate import evaluate_token_ids
+from src.model import TransformerConfig, TransformerLM
+from src.train import (
     build_optimizer,
     load_training_checkpoint,
     save_training_checkpoint,
     train_steps,
 )
-from cs8803_hw1.utils import set_seed
+from src.utils import set_seed
 try:
     from .release_utils import choose_device, load_yaml, sha256_file, write_json
 except ImportError:

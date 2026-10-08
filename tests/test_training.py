@@ -6,9 +6,9 @@ from pathlib import Path
 import numpy as np
 import torch
 
-from cs8803_hw1.model import TransformerConfig, TransformerLM
-from cs8803_hw1.optimizer import AdamW
-from cs8803_hw1.train import (
+from src.model import TransformerConfig, TransformerLM
+from src.optimizer import AdamW
+from src.train import (
     TrainingConfig,
     build_optimizer,
     cosine_lr,

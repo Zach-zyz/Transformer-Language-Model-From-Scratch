@@ -19,7 +19,6 @@ venv/
 .idea/
 
 # Training outputs
-output/
 outputs/
 runs/
 wandb/
@@ -33,3 +32,9 @@ data/packed/
 *.pt
 *.pth
 *.ckpt
+
+ai_disclosure.md
+
+BONUS.md
+tmp/
+logs
